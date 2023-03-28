@@ -234,6 +234,7 @@ GameObject:
   - component: {fileID: 529368645}
   - component: {fileID: 529368647}
   - component: {fileID: 529368646}
+  - component: {fileID: 529368648}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -290,6 +291,18 @@ MonoBehaviour:
   monsterPrefab: {fileID: 895211356916686346, guid: db793787b5eb2a048a92551319d7d777, type: 3}
   rows: 15
   cols: 11
+--- !u!114 &529368648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529368642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5548c47e742fafe40a0c8389c547c060, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &974588508
 GameObject:
   m_ObjectHideFlags: 0
