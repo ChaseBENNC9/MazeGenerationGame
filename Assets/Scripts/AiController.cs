@@ -14,18 +14,65 @@ public class AiController : MonoBehaviour
         get { return graph; }
         set { graph = value; }
     }
-    // Start is called before the first frame update
-    void Start()
+
+
+
+    private GameObject monster;
+    public GameObject Monster 
     {
-        
+        get { return monster; }
+        set { monster = value; }       
+    }
+    private GameObject player;
+    public GameObject Player
+    {
+        get { return player; }
+        set { player = value; } 
+    }
+    private float hallWidth;
+    public float HallWidth 
+    {
+        get { return hallWidth; }
+        set { hallWidth = value; }
+    }
+    [SerializeField] private float monsterSpeed;
+    private int startRow = -1;
+    private int startCol = -1;
+    // Start is called before the first frame update
+    public void StartAI()
+    {
+        startRow = graph.GetUpperBound(0) - 1;
+        startCol = graph.GetUpperBound(1) - 1;            
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
+        if(startRow != -1 && startCol != -1)
+        {            
+            int playerCol = (int)Mathf.Round(player.transform.position.x / hallWidth);
+            int playerRow = (int)Mathf.Round(player.transform.position.z / hallWidth);
+            
+            List<Node> path = FindPath(startRow, startCol, playerRow, playerCol);
 
+            if(path != null && path.Count > 1)
+            {
+                Node nextNode = path[1];
+                float nextX = nextNode.y * hallWidth;
+                float nextZ = nextNode.x * hallWidth;
+                Vector3 endPosition = new Vector3(nextX, 0f, nextZ);
+                float step =  monsterSpeed * Time.deltaTime;
+                monster.transform.position = Vector3.MoveTowards(monster.transform.position, endPosition, step);
+                Vector3 targetDirection = endPosition - monster.transform.position;
+                Vector3 newDirection = Vector3.RotateTowards(monster.transform.forward, targetDirection, step, 0.0f);
+                monster.transform.rotation = Quaternion.LookRotation(newDirection);
+                if(monster.transform.position == endPosition){
+                    startRow = nextNode.x;
+                    startCol = nextNode.y;
+                }
+            }
+        }
+    }
 
     private int CalculateDistanceCost(Node a, Node b)
     {
