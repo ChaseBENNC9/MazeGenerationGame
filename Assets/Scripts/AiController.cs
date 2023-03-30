@@ -205,6 +205,14 @@ public class AiController : MonoBehaviour
     }
 
 
+        public void StopAI()
+    {
+        startRow = -1;
+        startCol = -1;
+        Destroy(monster);
+    }
+
+
 
 
 }
