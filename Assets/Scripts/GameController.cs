@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using System;
 using UnityEngine;
 
@@ -13,6 +15,18 @@ public class GameController : MonoBehaviour
     
     [SerializeField] private int rows;
     [SerializeField] private int cols;
+    
+    
+    void Update()
+    {
+        if(Input.GetKeyDown("f"))
+        {
+
+            FindGoal();
+        }
+    }
+    
+    
     void Awake()
     {
         constructor = GetComponent<MazeConstructor>();
@@ -31,14 +45,14 @@ public class GameController : MonoBehaviour
     private GameObject CreateMonster(TriggerEventHandler monsterCallback)
     {
         Vector3 monsterPosition = new Vector3(constructor.goalCol * constructor.hallWidth, 0f, constructor.goalRow * constructor.hallWidth);
-        GameObject monster = Instantiate(monsterPrefab, monsterPosition, Quaternion.identity);
-        monster.tag = "Generated";   
-        TriggerEventRouter tm = monster.AddComponent<TriggerEventRouter>();
+        GameObject helper = Instantiate(monsterPrefab, monsterPosition, Quaternion.identity);
+        helper.tag = "Generated";   
+        TriggerEventRouter tm = helper.AddComponent<TriggerEventRouter>();
         tm.callback = monsterCallback;
 
 
 
-        return monster; 
+        return helper; 
     }
 
     void Start() 
@@ -50,6 +64,7 @@ public class GameController : MonoBehaviour
         aIController.Monster = CreateMonster(OnMonsterTrigger); 
         aIController.HallWidth = constructor.hallWidth;         
         aIController.StartAI();
+
     }
 
 
@@ -74,5 +89,36 @@ public class GameController : MonoBehaviour
         aIController.HallWidth = constructor.hallWidth;         
         aIController.StartAI();
 
+    }
+
+
+
+
+    private void FindGoal()
+    {
+
+        GameObject helper = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        helper.transform.position = aIController.Player.transform.position;
+        int helperCol = (int)Mathf.Round(helper.transform.position.x / constructor.hallWidth);
+        int helperRow = (int)Mathf.Round(helper.transform.position.z / constructor.hallWidth);
+        Debug.Log(constructor.goalCol + "," + constructor.goalRow);
+        List<Node> path = aIController.FindPath(helperRow,helperCol,constructor.goalRow,constructor.goalCol);
+         while(path != null && path.Count > 1)
+            {
+                Node nextNode = path[1];
+                float nextX = nextNode.y * constructor.hallWidth;
+                float nextZ = nextNode.x * constructor.hallWidth;
+                Vector3 endPosition = new Vector3(nextX, 0f, nextZ);
+                float step =  15 * Time.deltaTime;
+                helper.transform.position = Vector3.MoveTowards(helper.transform.position, endPosition, step);
+            
+                if(helper.transform.position == endPosition){
+                    helperRow = nextNode.x;
+                    helperCol = nextNode.y;
+                }
+            }
+
+
+        
     }
 }

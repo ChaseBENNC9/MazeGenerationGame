@@ -142,6 +142,9 @@ public class MazeConstructor : MonoBehaviour
     {            
         GameObject treasure = GameObject.CreatePrimitive(PrimitiveType.Cube);
         treasure.transform.position = new Vector3(goalCol * hallWidth, .5f, goalRow * hallWidth);
+       
+
+
         treasure.name = "Treasure";
         treasure.tag = "Generated";
 
@@ -151,6 +154,8 @@ public class MazeConstructor : MonoBehaviour
         TriggerEventRouter tc = treasure.AddComponent<TriggerEventRouter>();
         tc.callback = treasureCallback;
     }
+
+
 
 
 
