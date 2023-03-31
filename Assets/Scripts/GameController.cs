@@ -97,26 +97,43 @@ public class GameController : MonoBehaviour
     private void FindGoal()
     {
 
-        GameObject helper = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        helper.transform.position = aIController.Player.transform.position;
-        int helperCol = (int)Mathf.Round(helper.transform.position.x / constructor.hallWidth);
-        int helperRow = (int)Mathf.Round(helper.transform.position.z / constructor.hallWidth);
+        GameObject[] helpers = GameObject.FindGameObjectsWithTag("Helper");
+        foreach(GameObject helper in helpers)
+        { 
+            Destroy(helper);         
+        }
+        Vector3 helperPos = aIController.Player.transform.position;
+        int helperCol = (int)Mathf.Round(helperPos.x / constructor.hallWidth);
+        int helperRow = (int)Mathf.Round(helperPos.z / constructor.hallWidth);
         Debug.Log(constructor.goalCol + "," + constructor.goalRow);
         List<Node> path = aIController.FindPath(helperRow,helperCol,constructor.goalRow,constructor.goalCol);
-         while(path != null && path.Count > 1)
+        Debug.Log(path);
+         if(path != null && path.Count > 1)
+        {
+            foreach(Node n in path)
             {
-                Node nextNode = path[1];
-                float nextX = nextNode.y * constructor.hallWidth;
-                float nextZ = nextNode.x * constructor.hallWidth;
-                Vector3 endPosition = new Vector3(nextX, 0f, nextZ);
-                float step =  15 * Time.deltaTime;
-                helper.transform.position = Vector3.MoveTowards(helper.transform.position, endPosition, step);
-            
-                if(helper.transform.position == endPosition){
-                    helperRow = nextNode.x;
-                    helperCol = nextNode.y;
+
+                    Node nextNode = n;
+                    float nextX = nextNode.y * constructor.hallWidth;
+                    float nextZ = nextNode.x * constructor.hallWidth;
+                    Vector3 endPosition = new Vector3(nextX, 0f, nextZ);
+                    GameObject helper = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    helper.name = "Helper";
+                    helper.tag = "Helper";
+                    helper.GetComponent<SphereCollider>().isTrigger = true;
+                    helper.transform.position = new Vector3(endPosition.x,1f,endPosition.z);
+
+
+                    if(helper.transform.position == endPosition)
+                    {
+                        helperRow = nextNode.x;
+                        helperCol = nextNode.y;
+                    }
                 }
-            }
+
+            
+        }
+         
 
 
         

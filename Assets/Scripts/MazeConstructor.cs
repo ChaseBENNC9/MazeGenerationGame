@@ -113,6 +113,11 @@ public class MazeConstructor : MonoBehaviour
         foreach (GameObject go in objects) {
             Destroy(go);
         }
+       GameObject[] helpers = GameObject.FindGameObjectsWithTag("Helper");
+        foreach (GameObject go in objects) {
+            Destroy(go);
+        }
+
     }
 
 
