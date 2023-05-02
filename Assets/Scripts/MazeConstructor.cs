@@ -1,5 +1,7 @@
 using UnityEngine;
 
+//This Script Generates a new Maze based on the provided Dimensions. It Removes the current maze before generatng and showing a new one and placing the goal at the end.
+
 public class MazeConstructor : MonoBehaviour
 {
     public bool showDebug;

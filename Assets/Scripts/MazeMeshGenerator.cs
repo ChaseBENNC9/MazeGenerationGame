@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+//This Script handles the Mesh of the Maze  
 public class MazeMeshGenerator
 {    
     // generator params

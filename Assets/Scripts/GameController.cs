@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-
+//Tis is the Game Controller Script, It controls the main game loop , creates a player and enemy at oppisite ends of the maze and Controls when the Game is finished
 [RequireComponent(typeof(MazeConstructor))]           
 
 public class GameController : MonoBehaviour
@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
     
     void Update()
     {
-        if(Input.GetKeyDown("f"))
+        if(Input.GetKeyDown(KeyCode.F))
         {
 
             FindGoal();
@@ -45,14 +45,14 @@ public class GameController : MonoBehaviour
     private GameObject CreateMonster(TriggerEventHandler monsterCallback)
     {
         Vector3 monsterPosition = new Vector3(constructor.goalCol * constructor.hallWidth, 0f, constructor.goalRow * constructor.hallWidth);
-        GameObject helper = Instantiate(monsterPrefab, monsterPosition, Quaternion.identity);
-        helper.tag = "Generated";   
-        TriggerEventRouter tm = helper.AddComponent<TriggerEventRouter>();
+        GameObject monster = Instantiate(monsterPrefab, monsterPosition, Quaternion.identity);
+        monster.tag = "Generated";   
+        TriggerEventRouter tm = monster.AddComponent<TriggerEventRouter>();
         tm.callback = monsterCallback;
 
 
 
-        return helper; 
+        return monster; 
     }
 
     void Start() 
@@ -74,6 +74,11 @@ public class GameController : MonoBehaviour
     { 
         Debug.Log("You Won!");
         aIController.StopAI();
+        GameObject[] helpers = GameObject.FindGameObjectsWithTag("Helper");
+        foreach(GameObject helper in helpers)
+        { 
+            Destroy(helper);         
+        }
     }
 
 

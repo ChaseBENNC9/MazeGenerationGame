@@ -1,3 +1,4 @@
+//This Script is a Utility Class that Represents the Maze Data. It handles the positioning for the Player and AI.
 public class Node
 {
     public int x;

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//The Purpose of this script is to the control the enemy AI. 
+//It Calculates the shortest distance between the Enemy and the Player.
 public class AiController : MonoBehaviour
 {
 
