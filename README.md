@@ -4,6 +4,6 @@ This is the third game in the ID623001-introduction-to-algorithmic-problem-solvi
 maze while avoiding the enemy that uses pathfinding to track the player. 
 
 # Advanced Assessment Tasks
-The Player can track the goal by pressing ''. A path of floating spheres appears in front of the player leading to the goal using the
+The Player can track the goal by pressing 'f'. A path of floating spheres appears in front of the player leading to the goal using the
 same method the AI uses to track the player. No external research was 
 required to complete this task because it uses existing methods in the script.
