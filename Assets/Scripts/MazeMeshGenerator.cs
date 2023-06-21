@@ -13,7 +13,7 @@ public class MazeMeshGenerator
         height = 3.5f;
     }
 
-    public Mesh FromData(int[,] data)
+    public Mesh FromData(int[,] data) //Adds in the 2d plane meshes for the floor , ceiling and walls of the maze.
     {
         Mesh maze = new Mesh();
         List<Vector3> newVertices = new List<Vector3>();
@@ -84,7 +84,7 @@ public class MazeMeshGenerator
         return maze;
     }
 
-    private void AddQuad(Matrix4x4 matrix, ref List<Vector3> newVertices,
+    private void AddQuad(Matrix4x4 matrix, ref List<Vector3> newVertices, //Creates the meshes for the maze.
         ref List<Vector2> newUVs, ref List<int> newTriangles)
     {
         int index = newVertices.Count;
